@@ -75,6 +75,25 @@ docker build --build-arg RUNTIME_IMAGE=<带 LibreOffice 的运行时镜像> .   
 
 依据 Apache License 2.0 第 5 条，除你另有明确声明外，你有意提交以纳入本项目的贡献均按本许可证条款授权。
 
+## 社区交流
+
+扫码加入 QQ 交流群，或添加微信联系作者（请注明来意）：
+
+<table>
+  <tr>
+    <td align="center">
+      <b>QQ 交流群 · 1132049639</b><br>
+      <img src="docs/images/qq-group-qr.png" width="220" alt="QQ 交流群二维码">
+    </td>
+    <td align="center">
+      <b>微信 · tobin</b><br>
+      <img src="docs/images/wechat-qr.png" width="220" alt="微信二维码">
+    </td>
+  </tr>
+</table>
+
+---
+
 ## 许可证
 
 本项目基于 [Apache License 2.0](LICENSE) 开源发布，版权归 苏州极简搭信息技术有限公司 所有。
