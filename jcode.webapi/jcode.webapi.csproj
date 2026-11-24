@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <UserSecretsId>80560d7e-b669-4de1-95f1-26eb23012243</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <OutputType>Exe</OutputType>
+    <Version>3.3.0</Version>
+    <SubVersion>1.0.0</SubVersion>
+    <Authors>tobin</Authors>
+    <Company>苏州极简搭信息技术有限公司</Company>
+    <Product>极简搭AI应用开发基座</Product>
+    <Copyright>https://www.jcodesoft.com</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://www.jcodesoft.com</PackageProjectUrl>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath></OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netcoreapp3.1\publish\jcode.webapi.xml</DocumentationFile>
+    <OutputPath>bin\Release\netcoreapp3.1\publish\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="11.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.13" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.3.1" />
+    <PackageReference Include="System.DirectoryServices.Protocols" Version="10.0.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\jcode.core\base\jcode.mq\jcode.mq.csproj" />
+    <ProjectReference Include="..\jcode.core\base\jcode.office\jcode.office.csproj" />
+    <ProjectReference Include="..\jcode.core\core\jcode.controllers\jcode.controllers.csproj" />
+    <ProjectReference Include="..\jcode.core\language\jcode.language.controllers\jcode.language.controllers.csproj" />
+    <ProjectReference Include="..\jcode.core\quartz\jcode.quartz.controllers\jcode.quartz.controllers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AppBundles\" />
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="wwwroot\database" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\temp\preview\3dfa93cda9471de8c9ae54ff70706d431671437769628.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\temp\preview\3dfa93cda9471de8c9ae54ff70706d431671437862949.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\temp\preview\52188e23be72007b0e58b29daf3a6ec71671441617416.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\temp\preview\52188e23be72007b0e58b29daf3a6ec71671523112858.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\temp\preview\52188e23be72007b0e58b29daf3a6ec71671607463790.html" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+
+</Project>

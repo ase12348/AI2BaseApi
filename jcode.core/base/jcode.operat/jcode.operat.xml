@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>jcode.operat</name>
+    </assembly>
+    <members>
+        <member name="T:jcode.operat.IOperator">
+            <summary>
+            版 本 极简搭AI应用开发基座
+            Copyright (c) 2019-present 苏州极简搭信息技术有限公司
+            创建人：tobin
+            日 期：2019.09.12
+            描 述：当前连接用户信息处理类
+            </summary>
+        </member>
+        <member name="M:jcode.operat.IOperator.EncodeToken(System.String,System.String,System.String)">
+            <summary>
+            生成jwt令牌
+            </summary>
+            <param name="userId">用户id</param>
+            <param name="userName">用户名称</param>
+            <param name="account">用户账号</param>
+            <returns></returns>
+        </member>
+        <member name="M:jcode.operat.IOperator.DecodeToken(System.String)">
+            <summary>
+            解密jwt令牌
+            </summary>
+            <param name="token">令牌</param>
+            <returns>TokenExpiredException 时间过期,SignatureVerificationException 签证不正确</returns>
+        </member>
+        <member name="T:jcode.operat.OperationType">
+            <summary>
+            版 本 极简搭AI应用开发基座
+            Copyright (c) 2013-2018 苏州极简搭信息技术有限公司
+            创建人：极简搭-框架开发组
+            日 期：2017.03.08
+            描 述：操作类型
+            </summary>
+        </member>
+        <member name="F:jcode.operat.OperationType.Other">
+            <summary>
+            其他
+            </summary>
+        </member>
+        <member name="F:jcode.operat.OperationType.Login">
+            <summary>
+            登陆
+            </summary>
+        </member>
+        <member name="F:jcode.operat.OperationType.Exit">
+            <summary>
+            登陆
+            </summary>
+        </member>
+        <member name="F:jcode.operat.OperationType.Visit">
+            <summary>
+            访问
+            </summary>
+        </member>
+        <member name="F:jcode.operat.OperationType.Leave">
+            <summary>
+            离开
+            </summary>
+        </member>
+        <member name="F:jcode.operat.OperationType.Create">
+            <summary>
+            新增
+            </summary>
+        </member>
+        <member name="F:jcode.operat.OperationType.Delete">
+            <summary>
+            删除
+            </summary>
+        </member>
+        <member name="F:jcode.operat.OperationType.Update">
+            <summary>
+            修改
+            </summary>
+        </member>
+        <member name="F:jcode.operat.OperationType.Submit">
+            <summary>
+            提交
+            </summary>
+        </member>
+        <member name="F:jcode.operat.OperationType.Exception">
+            <summary>
+            异常
+            </summary>
+        </member>
+        <member name="F:jcode.operat.OperationType.ApiLogin">
+            <summary>
+            异常
+            </summary>
+        </member>
+        <member name="T:jcode.operat.Operator">
+            <summary>
+            版 本 极简搭AI应用开发基座
+            Copyright (c) 2019-present 苏州极简搭信息技术有限公司
+            创建人：tobin
+            日 期：2019.09.12
+            描 述：当前连接用户信息处理类
+            </summary>
+        </member>
+        <member name="M:jcode.operat.Operator.EncodeToken(System.String,System.String,System.String)">
+            <summary>
+            生成jwt令牌
+            </summary>
+            <param name="userId">用户id</param>
+            <param name="userName">用户名称</param>
+            <param name="account">用户账号</param>
+            <returns></returns>
+        </member>
+        <member name="M:jcode.operat.Operator.DecodeToken(System.String)">
+            <summary>
+            解密jwt令牌
+            </summary>
+            <param name="token">令牌</param>
+            <returns>TokenExpiredException 时间过期,SignatureVerificationException 签证不正确</returns>
+        </member>
+        <member name="T:jcode.operat.Payload">
+            <summary>
+            令牌中的信息
+            </summary>
+        </member>
+        <member name="P:jcode.operat.Payload.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:jcode.operat.Payload.UserName">
+            <summary>
+            用户名称
+            </summary>
+        </member>
+        <member name="P:jcode.operat.Payload.Account">
+            <summary>
+            用户账号
+            </summary>
+        </member>
+    </members>
+</doc>

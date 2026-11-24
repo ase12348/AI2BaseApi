@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <PackageId>jcode.iapplication</PackageId>
+    <Authors>tobin</Authors>
+    <Company>苏州极简搭信息技术有限公司</Company>
+    <Product>极简搭AI应用开发基座</Product>
+    <Copyright>https://www.jcodesoft.com</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://www.jcodesoft.com</PackageProjectUrl>
+    <PackageIcon>applogo.png</PackageIcon>
+    <PackageReleaseNotes>使用需要购买极简搭AI应用开发基座https://www.jcodesoft.com</PackageReleaseNotes>
+    <Version>6.0.1</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.1\jcode.iapplication.xml</DocumentationFile>
+    <OutputPath>bin\Debug\netstandard2.1\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>bin\Release\netstandard2.1\</OutputPath>
+    <DocumentationFile>bin\Release\netstandard2.1\jcode.iapplication.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Jint" Version="4.17.0" />
+    <ProjectReference Include="..\..\base\jcode.orm\jcode.orm.csproj" />
+    <ProjectReference Include="..\..\base\jcode.util\jcode.util.csproj" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\base\jcode.office\jcode.office.csproj" />
+    <ProjectReference Include="..\..\base\jcode.oss\jcode.oss.csproj" />
+    <ProjectReference Include="..\..\base\jcode.timer\jcode.timer.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <Version>6.0.1</Version>
+    <Authors>tobin</Authors>
+    <Company>苏州极简搭信息技术有限公司</Company>
+    <Product>极简搭AI应用开发基座</Product>
+    <Copyright>https://www.jcodesoft.com</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://www.jcodesoft.com</PackageProjectUrl>
+    <PackageIcon>applogo.png</PackageIcon>
+    <PackageReleaseNotes>使用需要购买极简搭AI应用开发基座https://www.jcodesoft.com</PackageReleaseNotes>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\base\jcode.web.util\jcode.web.util.csproj" />
+    <ProjectReference Include="..\jcode.application\jcode.application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SystemConfig\" />
+  </ItemGroup>
+
+</Project>

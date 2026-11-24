@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Authors>tobin</Authors>
+    <Company>苏州极简搭信息技术有限公司</Company>
+    <Product>极简搭AI应用开发基座</Product>
+    <Description>极简搭util通用方法</Description>
+    <PackageProjectUrl>https://www.jcodesoft.com</PackageProjectUrl>
+    <PackageIcon>applogo.png</PackageIcon>
+    <Copyright>https://www.jcodesoft.com</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReleaseNotes>使用需要购买极简搭AI应用开发基座https://www.jcodesoft.com</PackageReleaseNotes>
+    <PackageId>jcode.util</PackageId>
+    <Version>8.12.6</Version>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.1\jcode.util.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.1\jcode.util.xml</DocumentationFile>
+    <OutputPath>bin\Release\netstandard2.1\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AlibabaCloud.SDK.Ocr-api20210707" Version="3.1.3" />
+	  <PackageReference Include="AlibabaCloud.SDK.Sts20150401" Version="1.2.0" />
+    <PackageReference Include="aliyun-net-sdk-core" Version="1.6.2" />
+    <PackageReference Include="Aliyun.OSS.SDK.NetCore" Version="2.14.1" />
+    <PackageReference Include="CHTCHSConv" Version="1.0.0" />
+    <PackageReference Include="HuaweiCloud.OBS.SDK" Version="3.20.7" />
+    <!-- 以下两项是为消除传递依赖的已知漏洞通告（NU1904）：HuaweiCloud.OBS.SDK 带 log4net 2.0.8，jcode.exchange 经 System.DirectoryServices 链带 System.Drawing.Common 4.7.0 -->
+    <PackageReference Include="log4net" Version="2.0.16" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.13" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="10.0.13" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.13" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.13" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.13" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="10.0.13" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.13" />
+    <PackageReference Include="Minio" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="NLog" Version="6.2.2" />
+    <!-- 停在 2.7.6：2.8.x 起 NuGet 二进制附带 OSMF EULA（营收且年营业额≥1万美元需付维护费），2.7.6 的 nuspec 仍是纯 Apache-2.0。升 2.8.x 前要先定许可方案。2.7.6 用 SixLabors.ImageSharp 而非 SkiaSharp，故无需显式补原生资产 -->
+    <PackageReference Include="NPOI" Version="2.7.6" />
+    <PackageReference Include="PinYinConverterCore" Version="1.0.2" />
+    <PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.51" />
+    <PackageReference Include="TencentCloudSDK" Version="3.0.1525" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\applogo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 原 ce.autofac.extension 包已换成仓库内源码工程 -->
+    <ProjectReference Include="..\jcode.autofac\jcode.autofac.csproj" />
+    <!-- 七牛对象存储 SDK，仓库内源码工程 -->
+    <ProjectReference Include="..\jcode.qiniu\jcode.qiniu.csproj" />
+    <!-- Exchange 邮件 API，仓库内源码工程 -->
+    <ProjectReference Include="..\jcode.exchange\jcode.exchange.csproj" />
+  </ItemGroup>
+
+</Project>

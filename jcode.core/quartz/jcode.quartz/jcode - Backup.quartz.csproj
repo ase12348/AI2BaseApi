@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>6.0.0</Version>
+    <Authors>tobin</Authors>
+    <Company>苏州极简搭信息技术有限公司</Company>
+    <Product>极简搭AI应用开发基座</Product>
+    <Copyright>https://www.jcodesoft.com</Copyright>
+    <PackageProjectUrl>https://www.jcodesoft.com</PackageProjectUrl>
+    <PackageIcon>applogo.png</PackageIcon>
+    <PackageReleaseNotes>使用需要购买极简搭AI应用开发基座https://www.jcodesoft.com</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Quartz" Version="3.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\jcode.iquartz\jcode.iquartz.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\applogo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

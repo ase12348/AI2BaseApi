@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>disable</Nullable>
+    <Version>6.0.2</Version>
+    <Authors>cdbin</Authors>
+    <Description>依赖注入扩展</Description>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="9.3.4" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="10.0.13" />
+  </ItemGroup>
+
+</Project>

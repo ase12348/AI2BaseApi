@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+      <TargetFramework>net10.0</TargetFramework>
+      <Nullable>disable</Nullable>
+      <Version>6.0.1</Version>
+      <Authors>tobin</Authors>
+      <Company>苏州极简搭信息技术有限公司</Company>
+      <Product>极简搭AI应用开发基座</Product>
+      <Description>定时器方法</Description>
+      <Copyright>https://www.jcodesoft.com</Copyright>
+      <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+      <PackageProjectUrl>https://www.jcodesoft.com</PackageProjectUrl>
+      <PackageReleaseNotes>使用需要购买极简搭AI应用开发基座https://www.jcodesoft.com</PackageReleaseNotes>
+      <PackageIcon>applogo.png</PackageIcon>
+    </PropertyGroup>
+    
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\..\applogo.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Quartz" Version="4.6.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\jcode.autofac\jcode.autofac.csproj" />
+    </ItemGroup>
+
+</Project>

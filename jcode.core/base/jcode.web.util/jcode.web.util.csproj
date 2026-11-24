@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <Version>6.0.1</Version>
+    <Authors>tobin</Authors>
+    <Company>苏州极简搭信息技术有限公司</Company>
+    <Product>极简搭AI应用开发基座</Product>
+    <Description>web通用方法</Description>
+    <Copyright>https://www.jcodesoft.com</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://www.jcodesoft.com</PackageProjectUrl>
+    <PackageReleaseNotes>使用需要购买极简搭AI应用开发基座https://www.jcodesoft.com</PackageReleaseNotes>
+    <PackageIcon>applogo.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\jcode.util\jcode.util.csproj" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\core\jcode.iapplication\jcode.iapplication.csproj" />
+    <ProjectReference Include="..\..\language\jcode.ilanguage\jcode.ilanguage.csproj" />
+    <ProjectReference Include="..\jcode.operat\jcode.operat.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\applogo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+</Project>

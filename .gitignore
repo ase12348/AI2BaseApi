@@ -1,0 +1,144 @@
+# ======================================================================
+# 忽略规则总览
+#   1. .NET 构建/发布产物   2. NuGet           3. IDE 与操作系统
+#   4. 日志/临时文件        5. 密钥与本机覆盖   6. 本项目运行时产物
+# 原则：只忽略「可重新生成」或「本机专属」的内容；
+#       源码、配置文件、wwwroot/database/sqlite_base.db 必须入库。
+# ======================================================================
+
+# ---------------- .NET 构建输出 ----------------
+[Bb]in/
+[Oo]bj/
+artifacts/
+[Bb]ld/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+*.dbmdl
+*.jfm
+
+# ---------------- NuGet ----------------
+project.lock.json
+project.fragment.lock.json
+*.nuget.props
+*.nuget.targets
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# ---------------- 发布输出与本机发布配置 ----------------
+publish/
+*.[Pp]ublish.xml
+*.pubxml
+*.publishproj
+*.publishsettings
+
+# ---------------- 编译中间/原生产物（兜底，正常都在 bin、obj 内） ----------------
+*.dll
+*.exe
+*.pdb
+*.ilk
+*.obj
+*.cache
+*.tmp
+*.tmp_proj
+*.pid
+
+# ---------------- 测试与覆盖率 ----------------
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.VisualState.xml
+TestResult.xml
+*.coverage
+*.coveragexml
+*.trx
+
+# ---------------- 日志 ----------------
+*.log
+[Ll]og/
+[Ll]ogs/
+
+# ---------------- 临时文件与编辑器痕迹 ----------------
+*.swp
+*.swo
+*~
+*.orig
+*.rej
+.history/
+
+# ---------------- 前端工具链（若后续引入前端资源） ----------------
+node_modules/
+.sass-cache/
+.pnpm-store/
+
+# ---------------- IDE / 编辑器 ----------------
+# Visual Studio
+.vs/
+*.suo
+*.rsuser
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+# JetBrains Rider / IntelliJ
+.idea/
+*.sln.iml
+*.DotSettings.user
+_ReSharper*/
+
+# ---------------- 密钥与本机覆盖配置（切勿提交） ----------------
+.env
+.env.*
+!.env.example
+*.secret.json
+secrets.json
+appsettings.Local.json
+appsettings.*.Local.json
+
+# ---------------- 操作系统 ----------------
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+Icon?
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ======================================================================
+# 项目特定：运行时生成产物（请勿提交）
+# ======================================================================
+
+# 启动时由 AppBundleStore.Init 创建/解压的应用前端代码包
+/jcode.webapi/AppBundles/
+
+# 后端应用程序集装载目录（AppBundle:ModulesRootPath，运行时生成）
+Jcode_Modules/
+
+# 本机 SDK 版本锁定文件（仅个人使用；若需团队统一 SDK，请改为入库）
+global.json
+
+# wwwroot 运行时临时目录（文件上传/预览/删除的中间产物）
+# 说明：temp/ 已覆盖 temp/preview/，无需重复声明；
+#       img/、database/ 等静态资源保持入库
+/jcode.webapi/wwwroot/temp/
+/jcode.webapi/wwwroot/temp_delete/
+/jcode.webapi/wwwroot/temp_local_delete/
+
+# SQLite 本地开发库：启动时由 sqlite_base.db 自动建表灌数，可随时重建
+# 注意：sqlite_base.db 是基础模板库，必须入库，切勿忽略
+/jcode.webapi/wwwroot/database/jcode.db
+*.db-journal
+*.db-wal
+*.db-shm
+# /jcode.webapi/wwwroot/database/sqlite_*.db   # 如需忽略运行期派生的库副本，取消本行注释

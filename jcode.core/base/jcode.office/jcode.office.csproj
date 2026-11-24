@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>disable</Nullable>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\jcode.util\jcode.util.csproj" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="15.0.0" />
+    <!-- 与 jcode.util 保持一致，预览渲染直接依赖 NPOI，不依赖传递引用 -->
+    <PackageReference Include="NPOI" Version="2.7.6" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1;net10.0</TargetFrameworks>
+    <PackageId>jcode.orm</PackageId>
+    <Authors>tobin</Authors>
+    <Company>苏州极简搭信息技术有限公司</Company>
+    <Description>极简搭ORM</Description>
+    <Product>极简搭AI应用开发基座</Product>
+    <Copyright>https://www.jcodesoft.com</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReleaseNotes>使用需要购买极简搭AI应用开发基座https://www.jcodesoft.com</PackageReleaseNotes>
+    <PackageIcon>applogo.png</PackageIcon>
+    <Version>8.8.2</Version>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>key.pfx</AssemblyOriginatorKeyFile>
+    <PackageProjectUrl>https://www.jcodesoft.com</PackageProjectUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="DataBase.cs~RF55ebfab.TMP" />
+    <None Include="..\..\..\applogo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 原 jcode.cache / jcode.utils 包已换成仓库内源码工程（jcode.cache 已更名为 jcode.cache） -->
+    <ProjectReference Include="..\jcode.cache\jcode.cache.csproj" />
+    <ProjectReference Include="..\jcode.util\jcode.util.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="5.9.0" />
+    <PackageReference Include="NetTopologySuite.IO.GeoJSON" Version="4.0.0" />
+    <PackageReference Include="Oscar.Data.SqlClient" Version="4.2.36" />
+    <PackageReference Include="SqlSugar.ClickHouseCore" Version="5.1.4.201" />
+    <PackageReference Include="SqlSugar.GBaseCore" Version="5.1.4.270" />
+    <PackageReference Include="SqlSugar.TDengineCore" Version="4.18.46" />
+    <PackageReference Include="SqlSugarCore" Version="5.1.4.221" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Npgsql.NetTopologySuite 10.x 只提供 net8.0 资产，netstandard2.1 目标继续使用 6.x -->
+    <PackageReference Include="Npgsql.NetTopologySuite" Version="6.0.13" Condition="'$(TargetFramework)' == 'netstandard2.1'" />
+    <PackageReference Include="Npgsql.NetTopologySuite" Version="10.0.3" Condition="'$(TargetFramework)' == 'net10.0'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+</Project>

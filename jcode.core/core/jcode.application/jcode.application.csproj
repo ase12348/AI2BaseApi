@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <PackageId>jcode.application</PackageId>
+    <Authors>tobin</Authors>
+    <Company>苏州极简搭信息技术有限公司</Company>
+    <Product>极简搭AI应用开发基座</Product>
+    <Copyright>https://www.jcodesoft.com</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://www.jcodesoft.com</PackageProjectUrl>
+    <PackageIcon>applogo.png</PackageIcon>
+    <PackageReleaseNotes>使用需要购买极简搭AI应用开发基座https://www.jcodesoft.com</PackageReleaseNotes>
+    <Version>6.0.1</Version>
+  </PropertyGroup>
+
+
+
+
+  <ItemGroup>
+    <None Include="..\..\..\applogo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\base\jcode.operat\jcode.operat.csproj" />
+    <ProjectReference Include="..\jcode.iapplication\jcode.iapplication.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\DbDraft\" />
+    <Folder Include="Data\DbField\" />
+    <Folder Include="Message\StrategyInfo\" />
+    <Folder Include="Message\Contacts\" />
+    <Folder Include="Message\Msg\" />
+    <Folder Include="Message\SysUser\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Quartz" Version="4.6.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+</Project>

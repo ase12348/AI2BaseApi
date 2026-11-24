@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <RootNamespace>Microsoft.Exchange.WebServices.Data</RootNamespace>
+    <AssemblyName>jcode.exchange</AssemblyName>
+    <Product>极简搭AI应用开发基座</Product>
+    <Description>The Exchange Web Services (EWS) Managed API provides a managed interface for developing .NET client applications that use EWS.</Description>
+    <Company>苏州极简搭信息技术有限公司</Company>
+    <Copyright>https://www.jcodesoft.com</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <Version>2.0.0</Version>
+    <!-- 仅作为项目引用使用，不参与打包 -->
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <IsPackable>false</IsPackable>
+    <!-- 第三方源码：不生成 XML 文档、不启用严格警告 -->
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS0618;CS1591;SYSLIB0014;CS0168;CS0219;CS0162;CS0649;CS0414;CS0067;CS1998</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- 原 AssemblyInfo.cs 声明的程序集级 CLS 合规（成员上的 [CLSCompliant] 依赖它） -->
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>true</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.DirectoryServices" Version="4.7.0" />
+    <!-- 升级至安全版本，4.7.0 存在 GHSA-2m65-m22p-9wjw 中危漏洞 -->
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.15" />
+  </ItemGroup>
+
+</Project>
