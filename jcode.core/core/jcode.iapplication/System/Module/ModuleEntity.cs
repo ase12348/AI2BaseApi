@@ -134,6 +134,10 @@ namespace jcode.iapplication
         /// 终端类型 0电脑端 1移动端
         /// </summary>
         public int? F_TerminalType { get; set; }
+        /// <summary>
+        /// 移动端功能方案（按钮/列表字段/表单字段 JSON）
+        /// </summary>
+        public string F_Scheme { get; set; }
         #endregion
         
         #region 多租户

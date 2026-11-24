@@ -94,6 +94,7 @@ namespace jcode.controllers.MApp
                 F_CreateDate = t.F_CreateDate,
                 F_CreateUserId = t.F_CreateUserId,
                 F_CreateUserName = t.F_CreateUserName,
+                Scheme = t.F_Scheme,
             }).ToList();
             return Success(data);
         }
