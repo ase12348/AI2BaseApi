@@ -2,6 +2,18 @@
 
 基于 .NET 10 的 AI 应用开发基座，提供从数据访问、权限、缓存、任务调度到文件存储、消息队列、Office 预览的一整套基础能力，用于快速搭建企业级 API 服务与业务应用。
 
+[官方网站](https://www.jcodesoft.com) · [Web 前端](https://gitee.com/program_cat/ai2-base-web) · [移动端](https://gitee.com/program_cat/ai2-base-app)
+
+| 组成 | 仓库 | 技术栈 | 说明 |
+| --- | --- | --- | --- |
+| Web 前端 | [AI2BaseWeb](https://gitee.com/program_cat/ai2-base-web) | Vue 3 / Vite / TS | PC 端管理界面 |
+| 后端服务 | 当前仓库 | .NET 10 / ASP.NET Core | API 宿主、ORM、权限、缓存、任务调度 |
+| 移动端 | [AI2BaseApp](https://gitee.com/program_cat/ai2-base-app) | uni-app / Vue 3 | 同一套表单渲染到小程序 / App / 鸿蒙 |
+
+> 官网与产品介绍：**<https://www.jcodesoft.com>**
+
+---
+
 ## 目录结构
 
 ```
