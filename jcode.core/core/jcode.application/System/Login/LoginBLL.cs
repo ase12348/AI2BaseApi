@@ -535,8 +535,8 @@ namespace jcode.application
                     var feishuPostData = new
                     {
                         grant_type = "authorization_code",
-                        client_id = "",
-                        client_secret = "",
+                        client_id = "", // 飞书应用 ID，使用前请自行配置
+                        client_secret = "", // 飞书应用密钥，使用前请自行配置
                         code = code,
                         redirect_uri = "http://192.168.3.5:5173",
                     };
