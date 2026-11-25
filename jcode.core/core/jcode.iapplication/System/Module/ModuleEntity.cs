@@ -135,6 +135,10 @@ namespace jcode.iapplication
         /// </summary>
         public int? F_TerminalType { get; set; }
         /// <summary>
+        /// 功能分类（移动端对应数据字典 function 的明细值）
+        /// </summary>
+        public string F_Type { get; set; }
+        /// <summary>
         /// 移动端功能方案（按钮/列表字段/表单字段 JSON）
         /// </summary>
         public string F_Scheme { get; set; }

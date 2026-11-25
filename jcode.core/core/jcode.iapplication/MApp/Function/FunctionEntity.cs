@@ -1,5 +1,4 @@
-﻿using jcode.orm;
-using System;
+﻿using System;
 
 namespace jcode.iapplication
 {
@@ -8,9 +7,8 @@ namespace jcode.iapplication
     /// Copyright (c) 2019-present 苏州极简搭信息技术有限公司
     /// 创建人：tobin
     /// 日 期：2020.04.07
-    /// 描 述：移动端功能管理
+    /// 描 述：移动端功能（纯数据传输对象，数据已统一存放在菜单表 lr_base_module，不再对应独立数据表）
     /// </summary>
-    [MyTable("lr_app_function")]
     public class FunctionEntity
     {
         #region 实体成员
@@ -18,7 +16,6 @@ namespace jcode.iapplication
         /// 主键
         /// </summary>
         /// <returns></returns>
-        [Column(IsPrimary = true)]
         public string F_Id { get; set; }
         /// <summary>
         /// 功能分类
@@ -44,10 +41,12 @@ namespace jcode.iapplication
         /// <summary>
         /// 图标颜色
         /// </summary>
+        /// <returns></returns>
         public string F_Color { get; set; }
         /// <summary>
         /// 功能名称
         /// </summary>
+        /// <returns></returns>
         public string F_Name { get; set; }
         /// <summary>
         /// 模板ID
@@ -112,13 +111,10 @@ namespace jcode.iapplication
         public string F_AppCode{ get; set; }
 
         /// <summary>
-        /// 模板名称
+        /// 功能方案（按钮/列表字段/表单字段 JSON）
         /// </summary>
-        [Column(IsIgnore = true)]
         public string Scheme { get; set; }
 
-        
-       
         #endregion
 
         #region 多租户

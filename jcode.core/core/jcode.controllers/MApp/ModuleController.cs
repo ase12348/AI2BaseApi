@@ -2,6 +2,7 @@
 using jcode.util;
 using jcode.web.util;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,19 +18,13 @@ namespace jcode.controllers.MApp
     /// </summary>
     public class ModuleController : BaseApiController
     {
-        private readonly FunctionIBLL _functionIBLL;
-        private readonly MyFunctionIBLL _myFunctionIBLL;
         private readonly ModuleIBLL _moduleIBLL;
         /// <summary>
         /// 初始化
         /// </summary>
-        /// <param name="myFunctionIBLL">我的功能</param>
-        /// <param name="functionIBLL">移动端功能</param>
         /// <param name="moduleIBLL">功能模块（统一菜单表）</param>
-        public ModuleController(MyFunctionIBLL myFunctionIBLL, FunctionIBLL functionIBLL, ModuleIBLL moduleIBLL)
+        public ModuleController(ModuleIBLL moduleIBLL)
         {
-            _myFunctionIBLL = myFunctionIBLL;
-            _functionIBLL = functionIBLL;
             _moduleIBLL = moduleIBLL;
         }
 
@@ -45,30 +40,65 @@ namespace jcode.controllers.MApp
                 .ToList();
         }
 
+        /// <summary>
+        /// 将移动端功能方案（F_Scheme）中的按钮/列表字段/表单字段转换为子项集合
+        /// </summary>
+        /// <param name="moduleId">功能主键</param>
+        /// <param name="scheme">方案JSON：{"btns":[],"columns":[],"formFields":[]}</param>
+        private static List<ModuleItemEntity> BuildSchemeItems(string moduleId, string scheme)
+        {
+            var res = new List<ModuleItemEntity>();
+            if (string.IsNullOrWhiteSpace(scheme))
+            {
+                return res;
+            }
+            JObject obj;
+            try
+            {
+                obj = scheme.ToJObject();
+            }
+            catch
+            {
+                return res;
+            }
+            if (obj == null)
+            {
+                return res;
+            }
+            void Fill(string key, int type)
+            {
+                if (!(obj[key] is JArray arr))
+                {
+                    return;
+                }
+                int sort = 1;
+                foreach (var item in arr)
+                {
+                    string code = item["prop"]?.ToString();
+                    string name = item["label"]?.ToString();
+                    if (string.IsNullOrWhiteSpace(code) && string.IsNullOrWhiteSpace(name))
+                    {
+                        continue;
+                    }
+                    res.Add(new ModuleItemEntity
+                    {
+                        F_Id = code,
+                        F_ModuleId = moduleId,
+                        F_Type = type,
+                        F_Code = code,
+                        F_Name = string.IsNullOrWhiteSpace(name) ? code : name,
+                        F_SortCode = sort++,
+                    });
+                }
+            }
+            Fill("btns", 1);
+            Fill("columns", 2);
+            Fill("formFields", 3);
+            return res;
+        }
+
 
         #region 获取数据
-        /// <summary>
-        /// 获取我的常用应用数据
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("mapp/module/mylist")]
-        public async Task<IActionResult> MyList()
-        {
-
-            var list = await _myFunctionIBLL.GetList(this.GetUserId());
-            var mobileModules = await GetMobileModules();
-            var mobileIds = mobileModules.Select(t => t.F_ModuleId).ToList();
-            // 只保留仍存在的移动端菜单；用户从未配置过常用时默认展示全部移动端菜单
-            List<string> res = list
-                .Select(t => t.F_FunctionId)
-                .Where(id => mobileIds.Contains(id))
-                .ToList();
-            if (res.Count == 0)
-            {
-                res = mobileIds;
-            }
-            return Success(res);
-        }
         /// <summary>
         /// 获取数据
         /// </summary>
@@ -82,7 +112,7 @@ namespace jcode.controllers.MApp
             var data = modules.Select(t => new FunctionEntity
             {
                 F_Id = t.F_ModuleId,
-                F_Type = t.F_Target,
+                F_Type = t.F_Type,
                 F_Icon = t.F_Icon,
                 F_Name = t.F_FullName,
                 F_Url = t.F_UrlAddress,
@@ -104,26 +134,34 @@ namespace jcode.controllers.MApp
         /// </summary>
         /// <returns></returns>
         [HttpGet("mapp/module/{id}")]
-        [ProducesResponseType(typeof(ResponseDto<IEnumerable<FunctionInputDto>>), 200)]
+        [ProducesResponseType(typeof(ResponseDto<FunctionInputDto>), 200)]
         public async Task<IActionResult> GetForm(string id)
         {
-            FunctionInputDto dto = new FunctionInputDto();
-            var data = await _functionIBLL.GetEntity(id);
-            if (data == null) {
+            // 移动端菜单统一取功能模块表，按钮/列表字段/表单字段取功能方案
+            var module = await _moduleIBLL.GetModuleEntity(id);
+            if (module == null)
+            {
                 return Fail("获取失败");
             }
-            if (data.F_IsSystem == 2 && !string.IsNullOrEmpty(data.F_SchemeId))
+            var dto = new FunctionInputDto
             {
-                var scheme = await _functionIBLL.GetScheme(data.F_SchemeId);
-                data.Scheme = scheme.F_Scheme;
-            }
-            else if (data.F_IsSystem == 1)
-            {
-                
-                dto.ModuleItemEntitys = (List<ModuleItemEntity>)await _functionIBLL.GetModuleItemList(id);
-            }
-            dto.FunctionEntity = data;
-
+                FunctionEntity = new FunctionEntity
+                {
+                    F_Id = module.F_ModuleId,
+                    F_Type = module.F_Type,
+                    F_Icon = module.F_Icon,
+                    F_Name = module.F_FullName,
+                    F_Url = module.F_UrlAddress,
+                    F_EnabledMark = module.F_EnabledMark,
+                    F_SortCode = module.F_SortCode,
+                    F_IsSystem = 0,
+                    F_CreateDate = module.F_CreateDate,
+                    F_CreateUserId = module.F_CreateUserId,
+                    F_CreateUserName = module.F_CreateUserName,
+                    Scheme = module.F_Scheme,
+                },
+                ModuleItemEntitys = BuildSchemeItems(id, module.F_Scheme),
+            };
             return Success(dto);
         }
 
@@ -138,83 +176,18 @@ namespace jcode.controllers.MApp
         [ProducesResponseType(typeof(ResponseDto<IEnumerable<FunctionInputDto>>), 200)]
         public async Task<IActionResult> GetModuleItemList(string id,int type)
         {
-            var list = (List<ModuleItemEntity>)await _functionIBLL.GetModuleItemList(id);
+            // 移动端菜单（lr_base_module）的按钮/列表字段/表单字段保存在 F_Scheme 中
+            var module = await _moduleIBLL.GetModuleEntity(id);
+            var list = module == null
+                ? new List<ModuleItemEntity>()
+                : BuildSchemeItems(id, module.F_Scheme);
             if (type == 0)
             {
                 return Success(list);
             }
-            else {
-                return Success(list.FindAll(t=>t.F_Type == type));
-            }
+            return Success(list.FindAll(t => t.F_Type == type));
         }
 
-        #endregion
-
-        #region 提交数据
-        /// <summary>
-        /// 删除表单数据
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        [HttpDelete("mapp/module/{id}")]
-        [ProducesResponseType(typeof(ResponseDto), 200)]
-        public async Task<IActionResult> DeleteForm(string id)
-        {
-            await _functionIBLL.Delete(id);
-            return SuccessInfo("删除成功！");
-        }
-        /// <summary>
-        /// 新增移动功能
-        /// </summary>
-        /// <param name="dto">提交对象信息</param>
-        /// <returns></returns>
-        [HttpPost("mapp/module")]
-        [ProducesResponseType(typeof(ResponseDto), 200)]
-        public async Task<IActionResult> SaveForm(FunctionInputDto dto)
-        {
-            await _functionIBLL.SaveEntity(string.Empty, dto.FunctionEntity,dto.ModuleItemEntitys);
-            return Success("保存成功！",dto.FunctionEntity.F_Id);
-        }
-
-        /// <summary>
-        /// 更新移动功能
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <param name="dto">提交对象信息</param>
-        /// <returns></returns>
-        [HttpPut("mapp/module/{id}")]
-        [ProducesResponseType(typeof(ResponseDto), 200)]
-        public async Task<IActionResult> UpdateForm(string id, FunctionInputDto dto)
-        {
-            await _functionIBLL.SaveEntity(id, dto.FunctionEntity, dto.ModuleItemEntitys);
-            return Success("更新成功！",dto.FunctionEntity.F_Id);
-        }
-        /// <summary>
-        /// 启用/停用表单
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <param name="state">状态1启用0禁用</param>
-        /// <returns></returns>
-        [HttpPut("mapp/module/{id}/{state}")]
-        [ProducesResponseType(typeof(ResponseDto), 200)]
-        public async Task<IActionResult> UpDateSate(string id, int state)
-        {
-            await _functionIBLL.UpdateState(id, state);
-            return SuccessInfo((state == 1 ? "启用" : "禁用") + "成功！");
-        }
-
-        /// <summary>
-        /// 更新我的常用应用
-        /// </summary>
-        /// <param name="dto">功能id集合字串</param>
-        /// <returns></returns>
-        [HttpPut("mapp/module/mylist")]
-        [ProducesResponseType(typeof(ResponseDto), 200)]
-        public async Task<IActionResult> UpdateMyList(IDSDto dto)
-        {
-            await _myFunctionIBLL.SaveEntity(this.GetUserId(), dto.Ids);
-            return SuccessInfo("保存成功");
-        }
         #endregion
     }
 }

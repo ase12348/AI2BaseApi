@@ -19,7 +19,6 @@ namespace jcode.iapplication
     {
         private readonly SettingService desktopService = new SettingService();
         private readonly ModuleIBLL _moduleIBLL;
-        private readonly FunctionIBLL _functionIBLL;
 
         private readonly UserRelationIBLL _userRelationIBLL;
         private readonly CompanyIBLL _companyIBLL;
@@ -36,7 +35,6 @@ namespace jcode.iapplication
         /// <param name="userRelationIBLL"></param>
         /// <param name="companyIBLL"></param>
         /// <param name="departmentIBLL"></param>
-        /// <param name="functionIBLL"></param>
         /// <param name="annexesFileIBLL"></param>
         /// <param name="iAnnexes"></param>
         /// <exception cref="ArgumentNullException"></exception>
@@ -45,7 +43,6 @@ namespace jcode.iapplication
             UserRelationIBLL userRelationIBLL,
             CompanyIBLL companyIBLL, 
             DepartmentIBLL departmentIBLL, 
-            FunctionIBLL functionIBLL,
             AnnexesFileIBLL annexesFileIBLL,
             IAnnexes iAnnexes
             )
@@ -54,7 +51,6 @@ namespace jcode.iapplication
             _userRelationIBLL = userRelationIBLL;
             _companyIBLL = companyIBLL;
             _departmentIBLL = departmentIBLL;
-            _functionIBLL = functionIBLL;
             
             _annexesFileIBLL = annexesFileIBLL;
             
@@ -189,8 +185,8 @@ namespace jcode.iapplication
                 await Delete(entity);
             }
             else {
+                // 移动功能已并入菜单表，统一由功能模块处理
                 await _moduleIBLL.Delete(moduleId);
-                await _functionIBLL.Delete(moduleId);
             }
         }
 
@@ -337,13 +333,8 @@ namespace jcode.iapplication
             try
             {
                 await desktopService.UpdateEntity(entity);
-                if (entity.F_Type == 1)
-                {
-                    await _moduleIBLL.UpdateState(entity.F_ModuleId, (int)entity.F_EnabledMark);
-                }
-                else {
-                    await _functionIBLL.UpdateState(entity.F_ModuleId, (int)entity.F_EnabledMark);
-                }
+                // 桌面配置与移动功能均已统一到菜单表，状态统一在功能模块中更新
+                await _moduleIBLL.UpdateState(entity.F_ModuleId, (int)entity.F_EnabledMark);
 
                 desktopService.Commit();
             }

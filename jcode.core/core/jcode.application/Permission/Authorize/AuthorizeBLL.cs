@@ -20,7 +20,6 @@ namespace jcode.application
         private readonly ICache _iCache;
         private readonly UserRelationIBLL _userRelationIBLL;
         private readonly ModuleIBLL _moduleIBLL;
-        private readonly FunctionIBLL _functionIBLL;
 
         /// <summary>
         /// 构造方法
@@ -28,13 +27,11 @@ namespace jcode.application
         /// <param name="iCache"></param>
         /// <param name="userRelationIBLL"></param>
         /// <param name="moduleIBLL"></param>
-        /// <param name="functionIBLL"></param>
-        public AuthorizeBLL(ICache iCache, UserRelationIBLL userRelationIBLL, ModuleIBLL moduleIBLL, FunctionIBLL functionIBLL)
+        public AuthorizeBLL(ICache iCache, UserRelationIBLL userRelationIBLL, ModuleIBLL moduleIBLL)
         {
             _iCache = iCache;
             _userRelationIBLL = userRelationIBLL ?? throw new ArgumentNullException(nameof(userRelationIBLL));
             _moduleIBLL = moduleIBLL ?? throw new ArgumentNullException(nameof(moduleIBLL));
-            _functionIBLL = functionIBLL ?? throw new ArgumentNullException(nameof(functionIBLL)); 
         }
         #region 获取数据
         /// <summary>
@@ -100,50 +97,8 @@ namespace jcode.application
             if (user.F_SecurityLevel == 1 || user.F_SecurityLevel == 5)
             {
 
-                /*switch (itemType)
-                {
-                    case 2:
-                        var buttonList = await _moduleIBLL.GetButtonList(parentId);
-                        foreach (var item in buttonList)
-                        {
-                            mylist.Add(item.F_EnCode);
-                        }
-                        break;
-                    case 3:
-                        var columnList = await _moduleIBLL.GetColumnList(parentId);
-                        foreach (var item in columnList)
-                        {
-                            mylist.Add(item.F_EnCode);
-                        }
-                        break;
-                    case 4:
-                        var formList = await _moduleIBLL.GetFormList(parentId);
-                        foreach (var item in formList)
-                        {
-                            mylist.Add(item.F_EnCode);
-                        }
-                        break;
-                    case 6:
-                    case 7:
-                    case 8:
-                        var moduleItemList = await _functionIBLL.GetModuleItemList(parentId);
-                        foreach (var item in moduleItemList)
-                        {
-                            if (itemType == 6 && item.F_Type == 1) {
-                                mylist.Add(item.F_Code);
-                            }
-                            else if (itemType == 7 && item.F_Type == 2)
-                            {
-                                mylist.Add(item.F_Code);
-                            }
-                            else if(itemType == 8 && item.F_Type == 3)
-                            {
-                                mylist.Add(item.F_Code);
-                            }
-                        }
-
-                        break;
-                }*/
+                /*移动端按钮/列表字段/表单字段已不再单独建表（原 lr_app_moduleitem 已移除），
+                  统一由 lr_base_module.F_Scheme 解析，移动端功能授权一律按全部放行处理。*/
 
                 mylist.Add("jcode_auth_all");
             }
@@ -171,6 +126,26 @@ namespace jcode.application
         {
             await authorizeService.SaveAuthorize(objectType, objectId, ids, type, parentId);
             _iCache.Remove($"Authorize_{objectId}_{type}_{parentId}");
+        }
+
+        /// <summary>
+        /// 删除功能时级联清掉该功能下按钮/列表/表单字段的授权缓存。
+        /// 级联删除由 AuthorizeService.Remove(objectType, objectId, parentIds) 直接执行，
+        /// 不经过上面的 SaveAuthorize，缓存不清会导致已删的 jcode_auth_all 仍被读出。
+        /// </summary>
+        private void RemoveChildAuthorizeCache(string objectId, IEnumerable<string> moduleIds)
+        {
+            foreach (var moduleId in moduleIds)
+            {
+                // 电脑端功能：按钮/列表/表单
+                _iCache.Remove($"Authorize_{objectId}_2_{moduleId}");
+                _iCache.Remove($"Authorize_{objectId}_3_{moduleId}");
+                _iCache.Remove($"Authorize_{objectId}_4_{moduleId}");
+                // 移动端功能：按钮/列表/表单
+                _iCache.Remove($"Authorize_{objectId}_6_{moduleId}");
+                _iCache.Remove($"Authorize_{objectId}_7_{moduleId}");
+                _iCache.Remove($"Authorize_{objectId}_8_{moduleId}");
+            }
         }
 
         /// <summary>
@@ -235,6 +210,7 @@ namespace jcode.application
                         if (removeIds.Count > 0)
                         {
                             await authorizeService.Remove(authorizeDto.ObjectType, id, removeIds);
+                            RemoveChildAuthorizeCache(id, removeIds);
                         }
                     }
                     else if (authorizeDto.ItemType == 10)// 功能模块
@@ -259,6 +235,7 @@ namespace jcode.application
                         }
                         if (removeIds.Count > 0) {
                             await authorizeService.Remove(authorizeDto.ObjectType, id, removeIds);
+                            RemoveChildAuthorizeCache(id, removeIds);
                         }
                     }
 

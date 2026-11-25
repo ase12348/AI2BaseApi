@@ -1,23 +1,19 @@
-﻿using jcode.orm;
-
-namespace jcode.iapplication
+﻿namespace jcode.iapplication
 {
     /// <summary>
     /// 版 本 极简搭AI应用开发基座
     /// Copyright (c) 2019-present 苏州极简搭信息技术有限公司
     /// 创建人：tobin
     /// 日 期：2022.03.02
-    /// 描 述：移动功能模块子项 按钮 列表 表单
+    /// 描 述：移动功能模块子项 按钮 列表 表单（纯数据传输对象，由菜单表 lr_base_module.F_Scheme 解析得到，不再对应独立数据表）
     /// </summary>
-    [MyTable("lr_app_moduleitem")]
     public class ModuleItemEntity
     {
         #region 实体成员
         /// <summary>
-        /// 按钮主键
+        /// 子项主键（取方案中的 prop）
         /// </summary>
         /// <returns></returns>
-        [Column(IsPrimary = true)]
         public string F_Id { get; set; }
         /// <summary>
         /// 功能主键
@@ -50,7 +46,7 @@ namespace jcode.iapplication
         /// <returns></returns>
         public int? F_SortCode { get; set; }
         #endregion
-        
+
         #region 多租户
         /// <summary>
         /// 租户ID

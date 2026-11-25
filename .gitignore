@@ -138,6 +138,9 @@ global.json
 # SQLite 本地开发库：启动时由 sqlite_base.db 自动建表灌数，可随时重建
 # 注意：sqlite_base.db 是基础模板库，必须入库，切勿忽略
 /jcode.webapi/wwwroot/database/jcode.db
+# 数据库手工备份文件不入库
+*.bak_*
+*.bak
 *.db-journal
 *.db-wal
 *.db-shm

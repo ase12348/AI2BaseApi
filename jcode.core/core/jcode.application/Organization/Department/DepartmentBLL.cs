@@ -175,8 +175,13 @@ namespace jcode.application
                 return res;
             }
             res.Add(parentId);
-            
-         
+
+            // 层级编码缺失的脏数据（例如演示部门）不应导致登录接口空引用
+            if (string.IsNullOrEmpty(entity.F_DeepNum))
+            {
+                return res;
+            }
+
             var deepNums =new List<string>();
             deepNums.Add(entity.F_DeepNum);
             var myDeepNums = entity.F_DeepNum.Split(".");
@@ -190,6 +195,10 @@ namespace jcode.application
             
             
             var list =await departmentService.GetList(deepNums);
+            if (list == null)
+            {
+                return res;
+            }
             foreach (var item in list)
             {
                 res.Add(item.F_DepartmentId);
